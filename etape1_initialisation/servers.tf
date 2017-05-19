@@ -13,6 +13,8 @@ resource "google_compute_instance" "servers" {
     on_host_maintenance = "MIGRATE"
   }
 
+  tags = ["consul-servers", "nomad-servers"]
+
   network_interface {
     network = "${google_compute_network.nomad.name}"
     access_config {
