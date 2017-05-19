@@ -83,3 +83,21 @@ resource "google_compute_firewall" "nomad-clients" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["nomad-clients"]
 }
+
+resource "google_compute_firewall" "nomad-apps" {
+  name    = "nomad-apps"
+  network = "${google_compute_network.nomad.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["20000-60000", "80", "443"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["20000-60000"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["nomad-clients"]
+}
