@@ -5,7 +5,6 @@ if [ "$(uname -m)" != "x86_64" ]; then
 	cat <<EOF
 ERROR: Unsupported architecture: $(uname -m)
 Only x86_64 architectures are supported at this time
-Learn more: $SUPPORT_URL
 EOF
 	exit 1
 fi
@@ -14,8 +13,7 @@ fi
 
 if [[ -z ${1} ]]; then
 	cat <<EOF
-ERROR: No parameters
-Check args. Learn more: $SUPPORT_URL
+ERROR: No parameters. Check args.
 EOF
 exit 1
 fi
@@ -222,12 +220,7 @@ configure_nomad()
 	cat > /etc/nomad/config.hcl <<EOF
   datacenter = "${DATACENTER}"
 	data_dir = "/var/nomad"
-	bind_addr = "${OUTPUT_IP}"
-
-  advertise {
-  rpc = "${OUTPUT_IP}:4647"
-  serf = "${OUTPUT_IP}:4648"
-  }
+	bind_addr = "0.0.0.0"
 
   server {
       enabled = true
@@ -242,7 +235,7 @@ else
 	cat > /etc/nomad/config.hcl <<EOF
   datacenter = "${DATACENTER}"
   data_dir = "/var/nomad"
-  bind_addr = "${OUTPUT_IP}"
+  bind_addr = "0.0.0.0"
 
   client {
       enabled = true
