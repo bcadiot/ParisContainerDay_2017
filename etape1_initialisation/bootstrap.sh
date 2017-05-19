@@ -39,7 +39,8 @@ NOMAD_VERSION="0.5.6"
 CONSUL_VERSION="0.8.3"
 DOMAIN=${DOMAIN:-nomad.test}
 NODE_TYPE=${1:-client}
-DATACENTER=${2:-gce-west1}
+REGION=${2:-europe}
+DATACENTER=${3:-gce-west1}
 
 install_docker()
 {
@@ -218,6 +219,7 @@ configure_nomad()
 {
   if [ ${NODE_TYPE} == "server" ]; then
 	cat > /etc/nomad/config.hcl <<EOF
+	region = "${REGION}"
   datacenter = "${DATACENTER}"
 	data_dir = "/var/nomad"
 	bind_addr = "0.0.0.0"
@@ -233,6 +235,7 @@ configure_nomad()
 EOF
 else
 	cat > /etc/nomad/config.hcl <<EOF
+	region = "${REGION}"
   datacenter = "${DATACENTER}"
   data_dir = "/var/nomad"
   bind_addr = "0.0.0.0"

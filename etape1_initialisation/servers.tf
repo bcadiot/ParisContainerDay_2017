@@ -46,7 +46,7 @@ resource "google_compute_instance" "servers" {
 
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh server gce-west1"
+      "sudo /tmp/bootstrap.sh server europe gce-west1"
     ]
   }
 }

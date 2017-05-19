@@ -46,7 +46,7 @@ resource "google_compute_instance" "clients" {
 
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh client gce-west1",
+      "sudo /tmp/bootstrap.sh client europe gce-west1",
       "consul join ${join(" ", google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip)}"
     ]
   }
