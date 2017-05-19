@@ -52,3 +52,34 @@ resource "google_compute_firewall" "nomad-servers" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["nomad-servers"]
 }
+
+resource "google_compute_firewall" "consul-clients" {
+  name    = "consul-clients"
+  network = "${google_compute_network.nomad.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8300-8301", "8500"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["8301"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["consul-clients"]
+}
+
+resource "google_compute_firewall" "nomad-clients" {
+  name    = "nomad-clients"
+  network = "${google_compute_network.nomad.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["4646-4647"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["nomad-clients"]
+}
