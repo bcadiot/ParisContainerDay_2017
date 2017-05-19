@@ -157,14 +157,14 @@ configure_consul()
 {
   if [ ${NODE_TYPE} == "server" ]; then
     cat > /etc/consul/config.json <<EOF
-    {
+{
     "bootstrap_expect": 3,
     "server": true,
     "datacenter": "${DATACENTER}",
     "data_dir": "/var/consul",
     "log_level": "INFO",
     "enable_syslog": true,
-    "advertise_addr": "${OUTPUT_IP}",
+    "advertise_addr": "${OUTPUT_IP}"
 }
 
 EOF
