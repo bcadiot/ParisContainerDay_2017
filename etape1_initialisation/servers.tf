@@ -52,6 +52,10 @@ resource "google_compute_instance" "servers" {
 }
 
 resource "null_resource" "servers_provisioning" {
+  triggers {
+    cluster_instance_ids = "${join(",", google_compute_instance.servers.*.id)}"
+  }
+
   provisioner "remote-exec" {
     connection {
       user = "${var.dist_user}"

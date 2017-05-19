@@ -46,22 +46,7 @@ resource "google_compute_instance" "clients" {
 
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh client gce-west1"
-    ]
-  }
-}
-
-resource "null_resource" "clients_provisioning" {
-  provisioner "remote-exec" {
-    connection {
-      user = "${var.dist_user}"
-      host = "${element(google_compute_instance.clients.*.network_interface.0.access_config.0.assigned_nat_ip, 0)}"
-      timeout = "60s"
-      private_key = "${file("${var.private_key_path}")}"
-      agent = false
-    }
-
-    inline = [
+      "sudo /tmp/bootstrap.sh client gce-west1",
       "consul join ${join(" ", google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip)}"
     ]
   }
