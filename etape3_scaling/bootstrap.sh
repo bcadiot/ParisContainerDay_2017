@@ -274,6 +274,7 @@ else
 
   client {
       enabled = true
+			node_class = "data"
   }
 EOF
 fi
