@@ -48,14 +48,15 @@ resource "null_resource" "servers_join" {
   provisioner "remote-exec" {
     connection {
       user = "${var.dist_user}"
-      host = "${self.access_ip_v4}"
+      host = "${element(openstack_compute_instance_v2.servers.*.access_ip_v4, 0)}"
       timeout = "60s"
       private_key = "${file("${var.private_key_path}")}"
       agent = false
     }
 
     inline = [
-      "consul join ${file("../etape1_initialisation/cluster_ips.txt")}"
+      "consul join ${join(" ", openstack_compute_instance_v2.servers.*.access_ip_v4)}",
+      "consul join -wan ${file("../etape1_initialisation/cluster_ips.txt")}"
     ]
   }
 }

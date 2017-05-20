@@ -123,6 +123,22 @@ stop_hashicorp()
 install_packages()
 {
 	yum install -y -q unzip wget firewalld
+
+	# add firewalld rules
+	firewall-cmd --permanent --add-port=8300-8302/tcp
+	firewall-cmd --permanent --add-port=8500/tcp
+	firewall-cmd --permanent --add-port=8300-8302/udp
+	firewall-cmd --permanent --add-port=8500/udp
+
+	firewall-cmd --permanent --add-port=4646-4648/tcp
+	firewall-cmd --permanent --add-port=4646-4648/udp
+
+	firewall-cmd --permanent --add-port=20000-60000/tcp
+	firewall-cmd --permanent --add-port=20000-60000/udp
+
+	firewall-cmd --permanent --add-port=80/tcp
+	firewall-cmd --permanent --add-port=443/tcp
+	systemctl reload firewalld
 }
 
 install_consul()
