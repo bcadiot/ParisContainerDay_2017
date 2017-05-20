@@ -71,6 +71,6 @@ resource "null_resource" "servers_provisioning" {
   }
 
   provisioner "local-exec" {
-    command = "echo ${join(" ", google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip)} >> cluster_ips.txt"
+    command = "echo ${join(" ", google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip)} > cluster_ips.txt"
   }
 }
