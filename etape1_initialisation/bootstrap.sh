@@ -41,6 +41,7 @@ DOMAIN=${DOMAIN:-nomad.test}
 NODE_TYPE=${1:-client}
 REGION=${2:-europe}
 DATACENTER=${3:-gce-west1}
+EXTERNAL_IP=${4}
 
 install_docker()
 {
@@ -163,7 +164,8 @@ configure_consul()
     "data_dir": "/var/consul",
     "log_level": "INFO",
     "enable_syslog": true,
-    "advertise_addr": "${OUTPUT_IP}"
+		"bind_addr": "${OUTPUT_IP}",
+    "advertise_addr": "${EXTERNAL_IP}"
 }
 
 EOF
@@ -174,7 +176,8 @@ else
       "datacenter": "${DATACENTER}",
       "data_dir": "/var/consul",
       "log_level": "INFO",
-      "advertise_addr": "${OUTPUT_IP}"
+			"bind_addr": "${OUTPUT_IP}",
+      "advertise_addr": "${EXTERNAL_IP}"
   }
 EOF
 fi
@@ -224,6 +227,12 @@ configure_nomad()
 	data_dir = "/var/nomad"
 	bind_addr = "0.0.0.0"
 
+	advertise {
+		rpc = "${EXTERNAL_IP}"
+		http = "${EXTERNAL_IP}"
+		serf = "${EXTERNAL_IP}"
+	}
+
   server {
       enabled = true
       bootstrap_expect = 3
@@ -239,6 +248,12 @@ else
   datacenter = "${DATACENTER}"
   data_dir = "/var/nomad"
   bind_addr = "0.0.0.0"
+
+	advertise {
+		rpc = "${EXTERNAL_IP}"
+		http = "${EXTERNAL_IP}"
+		serf = "${EXTERNAL_IP}"
+	}
 
   client {
       enabled = true
