@@ -1,5 +1,5 @@
 resource "openstack_compute_instance_v2" "data_node" {
-  count           = 0
+  count           = 1
   region          = "GRA3"
   name            = "client-ovh-france-${count.index + 1}"
   image_name      = "CentOS 7"
