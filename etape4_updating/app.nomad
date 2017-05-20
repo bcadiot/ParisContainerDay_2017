@@ -15,6 +15,7 @@ job "pcd2017" {
     restart {
       attempts = 3
       delay    = "30s"
+      interval = "2m"
     }
 
     task "frontend" {
@@ -49,6 +50,7 @@ job "pcd2017" {
     restart {
       attempts = 3
       delay    = "30s"
+      interval = "2m"
     }
 
     constraint {
