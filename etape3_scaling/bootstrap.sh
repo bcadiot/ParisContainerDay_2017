@@ -244,6 +244,12 @@ configure_nomad()
 	data_dir = "/var/nomad"
 	bind_addr = "0.0.0.0"
 
+	advertise {
+		rpc = "${OUTPUT_IP}"
+		http = "${OUTPUT_IP}"
+		serf = "${OUTPUT_IP}"
+	}
+
   server {
       enabled = true
       bootstrap_expect = 3
@@ -259,6 +265,12 @@ else
   datacenter = "${DATACENTER}"
   data_dir = "/var/nomad"
   bind_addr = "0.0.0.0"
+
+	advertise {
+		rpc = "${OUTPUT_IP}"
+		http = "${OUTPUT_IP}"
+		serf = "${OUTPUT_IP}"
+	}
 
   client {
       enabled = true
