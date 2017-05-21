@@ -1,3 +1,7 @@
+variable "dist_user" {
+  default = "centos"
+}
+
 variable "region" {
   default = "us-west-2"
 }
@@ -16,4 +20,8 @@ variable "az_count" {
 
 variable "keypair" {
   description = "AWS Keypair"
+}
+
+variable "private_key_path" {
+  default = "~/.ssh/id_rsa"
 }

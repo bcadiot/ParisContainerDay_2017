@@ -2,6 +2,14 @@ resource "aws_security_group" "servers" {
   vpc_id      = "${aws_vpc.nomad.id}"
   name        = "servers_sg"
 
+  # ICMP
+  ingress {
+    protocol  = "icmp"
+    from_port = 8
+    to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # SSH
   ingress {
     protocol  = "tcp"
@@ -63,6 +71,14 @@ resource "aws_security_group" "servers" {
 resource "aws_security_group" "clients" {
   vpc_id      = "${aws_vpc.nomad.id}"
   name        = "clients_sg"
+
+  # ICMP
+  ingress {
+    protocol  = "icmp"
+    from_port = 8
+    to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   # SSH
   ingress {
