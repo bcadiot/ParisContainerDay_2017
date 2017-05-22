@@ -22,7 +22,7 @@ job "pcd2017" {
       driver = "docker"
 
       config {
-        image = "httpd"
+        image = "bcadiot/app-pcd2017:1.0"
       }
 
       service {
