@@ -1,0 +1,28 @@
+<body>
+  <h1>Datacenters</h1>
+  <ul>
+    {{ range datacenters }}
+      <li>{{ . }}</li>
+    {{ end }}
+  </ul>
+
+  <h1>Nodes</h1>
+  <ul>
+    {{ range nodes }}
+      <li>{{ .Node }} : {{ .Address }} : {{ .Datacenter }}</li>
+    {{ end }}
+  </ul>
+
+  <h1>Services</h1>
+  <ul>
+    {{ range services }}
+    <li>{{ .Name }}
+      <ul>
+      {{ range service .Name }}
+        <li>{{ .Node }} ({{ .Address }}:{{ .Port }})</li>
+      {{ end }}
+      </ul>
+    </li>
+    {{ end }}
+  </ul>
+</body>
