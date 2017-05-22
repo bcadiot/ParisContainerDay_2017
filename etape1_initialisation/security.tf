@@ -21,6 +21,23 @@ resource "google_compute_firewall" "ssh" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+resource "google_compute_firewall" "dns" {
+  name    = "dns"
+  network = "${google_compute_network.nomad.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
 resource "google_compute_firewall" "consul-servers" {
   name    = "consul-servers"
   network = "${google_compute_network.nomad.name}"

@@ -70,6 +70,8 @@ start_services()
 	if [ -d /run/systemd/system ] ; then
 		echo "Enable and start services"
 		systemctl daemon-reload || true
+		systemctl enable named || true
+		systemctl start named || true
 		systemctl enable docker || true
 		systemctl start docker || true
 	fi
@@ -119,7 +121,66 @@ stop_hashicorp()
 
 install_packages()
 {
-	yum install -y -q unzip wget firewalld
+	yum install -y -q unzip wget firewalld bind bind-utils
+}
+
+configure_services()
+{
+		cat > /etc/named.conf <<EOF
+		options {
+	  listen-on port 53 { any; };
+	  directory       "/var/named";
+	  dump-file       "/var/named/data/cache_dump.db";
+	  statistics-file "/var/named/data/named_stats.txt";
+	  memstatistics-file "/var/named/data/named_mem_stats.txt";
+
+	  allow-query { any; };
+	  allow-transfer { none; };
+	  allow-notify { none; };
+	  recursion yes;
+	  blackhole { blacklist; spoofbuster; };
+
+	  dnssec-enable no;
+	  dnssec-validation no;
+
+	  /* Path to ISC DLV key */
+	  bindkeys-file "/etc/named.iscdlv.key";
+
+	  managed-keys-directory "/var/named/dynamic";
+		};
+
+		controls {
+	  	inet 127.0.0.1 allow { 127.0.0.1; };
+		};
+
+		acl spoofbuster {
+	  	224.0.0.0/3;
+	  	10.0.0.0/8;
+	  	172.16.0.0/12;
+	  	192.168.0.0/16;
+		};
+
+		acl blacklist {
+	  	0.0.0.0/8;
+		};
+
+		include "/etc/named/consul.conf";
+EOF
+
+cat > /etc/named/consul.conf <<EOF
+zone "consul" IN {
+	type forward;
+	forward only;
+	forwarders { 127.0.0.1 port 8600; };
+};
+EOF
+
+	cat > /etc/NetworkManager/nm-system-settings.conf <<EOF
+	[ipv4]
+	method=auto
+	dns=127.0.0.1;
+	ignore-auto-dns=true
+EOF
 }
 
 install_consul()
@@ -281,6 +342,7 @@ do_install()
 {
 	install_packages
 	install_docker
+	configure_services
 	start_services
 
 	install_consul
