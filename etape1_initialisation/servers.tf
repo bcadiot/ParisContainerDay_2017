@@ -46,7 +46,9 @@ resource "google_compute_instance" "servers" {
 
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh server europe gce-west1 ${self.network_interface.0.access_config.0.assigned_nat_ip}"
+      "sudo /tmp/bootstrap.sh server europe gce-west1 ${self.network_interface.0.access_config.0.assigned_nat_ip}",
+      "sudo echo 'DNS1=127.0.0.1' | sudo tee -a /etc/sysconfig/network-scripts/ifcfg-eth0",
+      "sudo systemctl reload NetworkManager && sudo systemctl restart NetworkManager"
     ]
   }
 }
