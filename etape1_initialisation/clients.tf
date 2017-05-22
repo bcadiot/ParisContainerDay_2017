@@ -47,6 +47,9 @@ resource "google_compute_instance" "clients" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
       "sudo /tmp/bootstrap.sh client europe gce-west1 ${self.network_interface.0.access_config.0.assigned_nat_ip}",
+      "sudo echo 'DNS1=${element(google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip, 0)}' | sudo tee -a /etc/sysconfig/network-scripts/ifcfg-eth0",
+      "sudo echo 'DNS2=${element(google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip, 1)}' | sudo tee -a /etc/sysconfig/network-scripts/ifcfg-eth0",
+      "sudo systemctl reload NetworkManager && sudo systemctl restart NetworkManager",
       "consul join ${join(" ", google_compute_instance.servers.*.network_interface.0.access_config.0.assigned_nat_ip)}"
     ]
   }
