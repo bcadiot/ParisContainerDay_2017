@@ -131,11 +131,7 @@ configure_services()
 		server=169.254.169.254
 EOF
 
-		echo "DNS1=127.0.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 		sed -ie s/PEERDNS=yes/PEERDNS=no/g /etc/sysconfig/network-scripts/ifcfg-eth0
-
-		systemctl reload NetworkManager
-		systemctl restart NetworkManager
 }
 
 install_consul()
@@ -181,6 +177,7 @@ configure_consul()
     "log_level": "INFO",
     "enable_syslog": true,
 		"bind_addr": "${OUTPUT_IP}",
+		"client_addr": "${OUTPUT_IP}",
     "advertise_addr": "${EXTERNAL_IP}"
 }
 
