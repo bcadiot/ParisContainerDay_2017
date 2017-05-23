@@ -177,7 +177,7 @@ configure_consul()
     "log_level": "INFO",
     "enable_syslog": true,
 		"bind_addr": "${OUTPUT_IP}",
-		"client_addr": "${OUTPUT_IP}",
+		"client_addr": "0.0.0.0",
     "advertise_addr": "${EXTERNAL_IP}"
 }
 
