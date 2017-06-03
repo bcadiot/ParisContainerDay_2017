@@ -1,28 +1,79 @@
-<body>
-  <h1>Datacenters</h1>
-  <ul>
-    {{ range datacenters }}
-      <li>{{ . }}</li>
-    {{ end }}
-  </ul>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nomad @ Paris Container Day 2017</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+    <script src="lib/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Nomad @ Paris Container Day 2017</a>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
 
-  <h1>Nodes</h1>
-  <ul>
-    {{ range nodes }}
-      <li>{{ .Node }} : {{ .Address }} : {{ .Datacenter }}</li>
-    {{ end }}
-  </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-condensed">
+            <caption>Nodes (Datacenters : {{ range datacenters }}{{ . }}, {{ end }})</caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Datacenter</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ range nodes }}
+              <tr>
+                <td>{{ .Node }}</td>
+                <td>{{ .Address }}</td>
+                <td>{{ .Datacenter }}</td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
 
-  <h1>Services</h1>
-  <ul>
-    {{ range services }}
-    <li>{{ .Name }}
-      <ul>
-      {{ range service .Name }}
-        <li>{{ .Node }} ({{ .Address }}:{{ .Port }})</li>
-      {{ end }}
-      </ul>
-    </li>
-    {{ end }}
-  </ul>
-</body>
+        <div class="col-md-6">
+          <table class="table table-condensed">
+            <caption>Services</caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Node</th>
+                <th>Address</th>
+                <th>Port</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ range services }}
+              <tr>
+                <td>{{ .Name }}</td>
+
+                <td>{{ range service .Name }}
+                  <div class="row">{{ .Node }}</div>{{ end }}
+                </td>
+                <td>{{ range service .Name }}
+                  <div class="row">{{ .Address }}</div>{{ end }}
+                </td>
+                <td>{{ range service .Name }}
+                  <div class="row">{{ .Port }}</div>{{ end }}
+                </td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

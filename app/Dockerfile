@@ -16,6 +16,7 @@ RUN unzip /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip  && \
 
 RUN mkdir -p /app/consul-template/template
 ADD template/ /app/consul-template/template/
+ADD template/lib /var/lib/nginx/html/lib
 
 ADD entrypoint.sh /usr/local/bin/entrypoint.sh
 

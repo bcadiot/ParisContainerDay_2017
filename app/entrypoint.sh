@@ -44,7 +44,7 @@ function launch_nginx {
     exec ${CONSUL_TEMPLATE} -template "${CONSUL_CONFIG_SOURCE}:${HTTP_INDEX_DEST}" \
                        -log-level ${CONSUL_LOGLEVEL} \
                        -wait ${CONSUL_MINWAIT}:${CONSUL_MAXWAIT} \
-                       -exec "nginx -g \"daemon off;\""" \
+                       -exec "nginx -g \"daemon off;\"" \
                        -consul ${CONSUL_CONNECT} ${ctargs} "${vars[@]}"
 
 }
