@@ -21,7 +21,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <table class="table table-condensed">
             <caption>Nodes (Datacenters : {{ range datacenters }}{{ . }}, {{ end }})</caption>
             <thead>
@@ -32,44 +32,54 @@
               </tr>
             </thead>
             <tbody>
-              {{ range nodes }}
+              {{ range $dc := datacenters}}{{$dc := print "@" $dc}}
+              {{ range nodes $dc }}
               <tr>
                 <td>{{ .Node }}</td>
                 <td>{{ .Address }}</td>
                 <td>{{ .Datacenter }}</td>
               </tr>
               {{ end }}
+              {{ end }}
             </tbody>
           </table>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-7">
           <table class="table table-condensed">
             <caption>Services</caption>
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Datacenter</th>
                 <th>Node</th>
                 <th>Address</th>
                 <th>Port</th>
               </tr>
             </thead>
             <tbody>
-              {{ range services }}
+
+              {{ range $dc := datacenters}}{{$dcl := print "@" $dc}}
+              {{ range services $dcl }}
+              {{$service := print .Name $dcl}}
               <tr>
                 <td>{{ .Name }}</td>
 
-                <td>{{ range service .Name }}
+                <td>{{ range service $service }}
+                  <div class="row">{{ print $dc }}</div>{{ end }}
+                </td>
+                <td>{{ range service $service }}
                   <div class="row">{{ .Node }}</div>{{ end }}
                 </td>
-                <td>{{ range service .Name }}
+                <td>{{ range service $service }}
                   <div class="row">{{ .Address }}</div>{{ end }}
                 </td>
-                <td>{{ range service .Name }}
+                <td>{{ range service $service }}
                   <div class="row">{{ .Port }}</div>{{ end }}
                 </td>
               </tr>
               {{ end }}
+              {{end}}
             </tbody>
           </table>
         </div>
