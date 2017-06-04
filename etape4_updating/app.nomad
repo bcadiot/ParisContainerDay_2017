@@ -10,7 +10,7 @@ job "pcd2017" {
   }
 
   group "webs" {
-    count = 4
+    count = 2
 
     restart {
       attempts = 3
