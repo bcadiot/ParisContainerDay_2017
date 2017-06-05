@@ -21,8 +21,66 @@
 
     <div class="container">
       <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <table class="table table-bordered table-hover">
+            <caption>PCD 2017 - App</caption>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Datacenter</th>
+                <th>Host</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {{ range $dc := datacenters}}
+              {{$servicefront := print "pcd2017-webs-frontend@" $dc}}
+              {{$serviceback := print "pcd2017-database-mongo@" $dc}}
+              <tr>
+                <td>Frontend (nginx)</td>
+
+                <td>{{ range service $servicefront }}
+                  <div class="row">
+                    <p class="text-center">
+                      {{ print $dc }}
+                    </p>
+                  </div>{{ end }}
+                </td>
+                <td>{{ range service $servicefront }}
+                  <div class="row">
+                    <p class="text-center">
+                      {{ .Node }} ( {{ .Address }} : {{ .Port }} )
+                    </p>
+                  </div>{{ end }}
+                </td>
+              </tr>
+              <tr>
+                <td>Backend (mongod)</td>
+
+                <td>{{ range service $serviceback }}
+                  <div class="row">
+                    <p class="text-center">
+                      {{ print $dc }}
+                    </p>
+                  </div>{{ end }}
+                </td>
+                <td>{{ range service $serviceback }}
+                  <div class="row">
+                    <p class="text-center">
+                      {{ .Node }} ( {{ .Address }} : {{ .Port }} )
+                    </p>
+                  </div>{{ end }}
+                </td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-5">
-          <table class="table table-condensed">
+          <table class="table table-condensed table-striped">
             <caption>Nodes (Datacenters : {{ range datacenters }}{{ . }}, {{ end }})</caption>
             <thead>
               <tr>
@@ -46,7 +104,7 @@
         </div>
 
         <div class="col-md-7">
-          <table class="table table-condensed">
+          <table class="table table-condensed table-striped">
             <caption>Services</caption>
             <thead>
               <tr>
