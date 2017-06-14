@@ -55,4 +55,29 @@ nomad node-status
 nomad server-members
 ```
 
+## Création du cluster Nomad dans la région US
+
+Les sources sont dans le dossier `etape5_extending` et sont gérées via terraform.  
+Le provider utilisé est AWS, les identifiants doivent être configurés avant de lancer l'exécution : https://www.terraform.io/docs/providers/aws/index.html
+
+Terraform peut être lancé :
+```shell
+cd etape5_extending/
+terraform apply
+```
+
+A la fin de la création il est possible de se connecter sur l'un des serveurs pour vérifier l'état consul et nomad :
+```shell
+ssh xxx.xxx.xxx.xxx
+consul members -wan
+nomad node-status
+nomad server-members
+```
+
+La jonction de la région Nomad doit être réalisée manuellement. La découverte automatique via consul se limite à la connexion entre DC sous une même région (indiquer l'IP d'un serveur nomad d'une autre région) :
+```shell
+nomad server-join xxx.xxx.xxx.xx
+nomad server-members
+```
+
 Nomad Remote : nomad status -address=https://remote-address:4646
