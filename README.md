@@ -81,4 +81,41 @@ nomad server-join xxx.xxx.xxx.xx
 nomad server-members
 ```
 
+# Lancement des jobs
+
+## Lancement de l'application sur GCP
+
+Les sources sont dans le dossier `etape2_running`, il s'agit d'un job nomad.
+
+La job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveur en le lançant localement :
+```shell
+# Pour le lancement local, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
+cd etape2_running/
+nomad run -address=http://xxx.xxx.xxx.xxx:4646 app.nomad
+
+# Pour le lancement distant, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
+cd etape2_running/
+scp app.nomad xxx.xxx.xxx.xxx:/tmp/
+ssh xxx.xxx.xxx.xxx
+cd /tmp
+nomad run app.nomad
+```
+
+Pour utiliser l'API HTTP en POST, suivre la référence d'API :
+https://www.nomadproject.io/docs/http/jobs.html
+Attention, pour être passé en POST les jobs doivent être formatés en JSON. Ce n'est pas le cas du job de test qui est au format HCL
+
+Pour vérifier le job on peut utiliser les commandes status (ou utiliser l'API indiquée plus haut pour les accès HTTP) :
+```shell
+# En distant
+nomad status -address=http://xxx.xxx.xxx.xxx:4646
+nomad status -address=http://xxx.xxx.xxx.xxx:4646 pcd2017
+
+# En distant
+nomad status
+nomad status pcd2017
+```
+
+Pour terminer, on peut aller avec un navigateur interroger le port 80 de l'un des Nodes nomad executant notre application (la liste est indiquée par la commande status lancée plus haut)
+
 Nomad Remote : nomad status -address=https://remote-address:4646
