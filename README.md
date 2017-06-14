@@ -32,12 +32,12 @@ nomad server-members
 
 ## Création du datacenter France dans la région Europe
 
-Les sources sont dans le dossier `etape2_running` et sont gérées via terraform.  
+Les sources sont dans le dossier `etape3_extending` et sont gérées via terraform.  
 Le provider utilisé est OVH via OpenStack, les identifiants doivent être configurés avant de lancer l'exécution : https://www.terraform.io/docs/providers/openstack/index.html
 
 Terraform peut être lancé :
 ```shell
-cd etape2_running/
+cd etape3_extending/
 terraform apply
 ```
 
