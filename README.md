@@ -30,4 +30,29 @@ nomad node-status
 nomad server-members
 ```
 
+## Création du datacenter France dans la région Europe
+
+Les sources sont dans le dossier `etape2_running` et sont gérées via terraform.  
+Le provider utilisé est OVH via OpenStack, les identifiants doivent être configurés avant de lancer l'exécution : https://www.terraform.io/docs/providers/openstack/index.html
+
+Terraform peut être lancé :
+```shell
+cd etape2_running/
+terraform apply
+```
+
+A la fin de la création il est possible de se connecter sur l'un des serveurs pour vérifier l'état consul et nomad :
+```shell
+ssh xxx.xxx.xxx.xxx
+consul members
+```
+
+On peut également se reconnecter à l'un des serveurs de la région europe précédemment créés :
+```shell
+ssh xxx.xxx.xxx.xxx
+consul members -wan
+nomad node-status
+nomad server-members
+```
+
 Nomad Remote : nomad status -address=https://remote-address:4646
