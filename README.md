@@ -1,6 +1,6 @@
 # Nomad @ Paris Container Day 2017
 
-Repo des sources du slot Nomad pour la Paris Container Day 2017
+Repo des sources du slot "Nomad, l'orchestration made in HashiCorp" pour le Paris Container Day 2017
 
 Ce repo est divisé en plusieurs dossiers liés aux différentes étapes du slot, ainsi qu'un dossier app contenant les sources de l'application utilisée pour la démo.
 
