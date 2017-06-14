@@ -83,6 +83,21 @@ nomad server-members
 
 # Lancement des jobs
 
+## Compilation de l'image docker
+
+Une image Docker de test a été utilisée, les sources sont disponibles dans le dossier `app`
+
+L'image est déja compilée et disponible sur le docker hub, sont emplacement est `bcadiot/app-pcd2017:1.0`
+
+Il est possible de la recompiler et d'utiliser sa propre image (remplacez le tag par le votre et votre compte):
+```shell
+cd app/
+docker build -t bcadiot/app-pcd2017:1.0 .
+docker push bcadiot/app-pcd2017:1.0
+```
+
+Si vous changez l'image n'oubliez pas de modifier les jobs Nomad dans les dossier `etape2_running` et `etape4_updating`
+
 ## Lancement de l'application sur GCP
 
 Les sources sont dans le dossier `etape2_running`, il s'agit d'un job nomad.
