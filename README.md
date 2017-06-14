@@ -105,6 +105,8 @@ Pour utiliser l'API HTTP en POST, suivre la référence d'API :
 https://www.nomadproject.io/docs/http/jobs.html
 Attention, pour être passé en POST les jobs doivent être formatés en JSON. Ce n'est pas le cas du job de test qui est au format HCL
 
+## Vérification du status de l'application
+
 Pour vérifier le job on peut utiliser les commandes status (ou utiliser l'API indiquée plus haut pour les accès HTTP) :
 ```shell
 # En distant
@@ -117,5 +119,3 @@ nomad status pcd2017
 ```
 
 Pour terminer, on peut aller avec un navigateur interroger le port 80 de l'un des Nodes nomad executant notre application (la liste est indiquée par la commande status lancée plus haut)
-
-Nomad Remote : nomad status -address=https://remote-address:4646
