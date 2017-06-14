@@ -104,7 +104,7 @@ Si vous changez l'image n'oubliez pas de modifier les jobs Nomad dans les dossie
 
 Les sources sont dans le dossier `etape2_running`, il s'agit d'un job nomad.
 
-La job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveur en le lançant localement :
+Le job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveurs en le lançant localement :
 ```shell
 # Pour le lancement local, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
 cd etape2_running/
@@ -141,7 +141,7 @@ Pour terminer, on peut aller avec un navigateur interroger le port 80 de l'un de
 
 Les sources sont dans le dossier `etape4_updating`, il s'agit d'un job nomad.
 
-La job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveur en le lançant localement :
+Le job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveurs en le lançant localement :
 ```shell
 # Pour le lancement local, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
 cd etape4_updating/
