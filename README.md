@@ -49,7 +49,7 @@ consul members
 
 On peut également se reconnecter à l'un des serveurs de la région europe précédemment créés :
 ```shell
-ssh xxx.xxx.xxx.xxx
+ssh yyy.yyy.yyy.yyy
 consul members -wan
 nomad node-status
 nomad server-members
@@ -68,7 +68,7 @@ terraform apply
 
 A la fin de la création il est possible de se connecter sur l'un des serveurs pour vérifier l'état consul et nomad :
 ```shell
-ssh xxx.xxx.xxx.xxx
+ssh zzz.zzz.zzz.zzz
 consul members -wan
 nomad node-status
 nomad server-members
@@ -76,6 +76,7 @@ nomad server-members
 
 La jonction de la région Nomad doit être réalisée manuellement. La découverte automatique via consul se limite à la connexion entre DC sous une même région (indiquer l'IP d'un serveur nomad d'une autre région) :
 ```shell
+ssh zzz.zzz.zzz.zzz
 nomad server-join xxx.xxx.xxx.xx
 nomad server-members
 ```
