@@ -119,3 +119,29 @@ nomad status pcd2017
 ```
 
 Pour terminer, on peut aller avec un navigateur interroger le port 80 de l'un des Nodes nomad executant notre application (la liste est indiquée par la commande status lancée plus haut)
+
+## Mise à jour de l'application pour OVH
+
+Les sources sont dans le dossier `etape4_updating`, il s'agit d'un job nomad.
+
+La job peut être lancé soit depuis le client local si le binaire nomad est installé, soit via l'API HTTP avec un POST, soit en le copiant sur l'un des serveur en le lançant localement :
+```shell
+# Pour le lancement local, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
+cd etape4_updating/
+nomad run -address=http://xxx.xxx.xxx.xxx:4646 app.nomad
+
+# Pour le lancement distant, utiliser l'adresse IP d'un serveur Nomad de l'étape 1
+cd etape4_updating/
+scp app.nomad xxx.xxx.xxx.xxx:/tmp/
+ssh xxx.xxx.xxx.xxx
+cd /tmp
+nomad run app.nomad
+```
+
+Pour utiliser l'API HTTP en POST, suivre la référence d'API :
+https://www.nomadproject.io/docs/http/jobs.html
+Attention, pour être passé en POST les jobs doivent être formatés en JSON. Ce n'est pas le cas du job de test qui est au format HCL
+
+## Vérification de l'application
+
+La vérification est exactement la même qu'a l'étape précédente
