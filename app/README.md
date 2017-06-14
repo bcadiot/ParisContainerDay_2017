@@ -1,2 +1,1 @@
-docker build -t bca/app:1.0 .
-docker run --name app -p 80:80 bca/app:1.0
+Image de test utilisée lors de la présentation "Nomad, l'orchstration made in HashiCorp" au Paris Container Day 2017
